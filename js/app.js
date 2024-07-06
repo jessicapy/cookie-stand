@@ -6,9 +6,59 @@ const seattle = {
     maxClientPerHour: 65,
     avgCookiesPerSale: 6.3,
     cookiesPerHour: [], //empty array
-    /*address: '2901 3rd avenue #300, Seattle',
-    openHour: '6am',
-    closingHour: '7pm',*/
+    
+    estimate: function () {
+        //this.cookiesPerHour.push(generateRandomNumber(1, 1000))
+        //estimate es un metodo que calcula las ventas de esta tienda. 
+        this.cookiesPerHour=estimateSale(this); 
+        //this hace referencia la objeto donde estas. En este caso Seattle
+    }
+};
+
+const tokyo = {
+    locationName: 'Tokyo',
+    minClientPerHour: 3,
+    maxClientPerHour: 24,
+    avgCookiesPerSale: 1.2,
+    cookiesPerHour: [], //empty array
+    
+    estimate: function () {
+        //this.cookiesPerHour.push(generateRandomNumber(1, 1000))
+        this.cookiesPerHour=estimateSale(this);
+    }
+};
+
+const dubai = {
+    locationName: 'Dubai',
+    minClientPerHour: 11,
+    maxClientPerHour: 38,
+    avgCookiesPerSale: 3.7,
+    cookiesPerHour: [], //empty array
+    
+    estimate: function () {
+        //this.cookiesPerHour.push(generateRandomNumber(1, 1000))
+        this.cookiesPerHour=estimateSale(this);
+    }
+};
+
+const paris = {
+    locationName: 'Paris',
+    minClientPerHour: 20,
+    maxClientPerHour: 38,
+    avgCookiesPerSale: 2.3,
+    cookiesPerHour: [], //empty array
+    
+    estimate: function () {
+        //this.cookiesPerHour.push(generateRandomNumber(1, 1000))
+        this.cookiesPerHour=estimateSale(this);
+    }
+};
+
+const lima = {
+    locationName: 'Lima',
+    minClientPerHour: 20,
+    maxClientPerHour: 38,
+    avgCookiesPerSale: 2.3,
     cookiesPerHour: [], //empty array
     
     estimate: function () {
@@ -21,10 +71,11 @@ const hours=['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '
 const stores=[seattle,tokyo,dubai,paris,lima];
 
 function generateRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random()*(max-min))+min;
 }
 
-function estimateSale(store) {
+
+function estimateSale(store) { //store representa una de las tiendas
     const sale=[];
     for(let i=0;i<hours.length;i++){
         const numCustomers=generateRandomNumber(store.minClientPerHour,store.maxClientPerHour);
@@ -34,7 +85,7 @@ function estimateSale(store) {
     return sale;
 }
 
-function render(store){
+function render(store){  //muestra la lista de cada tienda
     let total=0;
     const root=document.getElementById('root');
     const location=document.createElement('section');
@@ -46,26 +97,31 @@ function render(store){
     const list=document.createElement('ul');
     location.appendChild(list);
 
-    for(leti=0;i<hours.length;i++){
-        let total +=store.cookiesPerHour[i];
+    for(let i=0;i<hours.length;i++){
+        total += store.cookiesPerHour[i]; //Total va a calcular el total de galletas vendidas de 6am a 7pm
         const litsItems=document.createElement('li');
         litsItems.textContent=hours[i]+': '+store.cookiesPerHour[i]+' cookies';
-        list.appendChild(litsItems);
+        list.appendChild(litsItems); //indica donde va a localizarse los elementos creados. Ex: listsItems
     }
-    const totalItems=document.createElement('il');
+    const totalItems=document.createElement('li');
     totalItems.textContent='total '+total+ ' cookies';
     list.appendChild(totalItems);
 }
 
-function runApplication(){
+function runApplication(){ //esta funcion es la que une todas las funciones de arriba
     for (let i=0;i<stores.length;i++){
         stores[i].estimate();
+        render(stores[i]);
     }
 }
 
-runApplication();
+runApplication(); // esto ejecuta la funcion runApplication
 
 
+//cookiesPerHour: [], //empty array
+    /*address: '2901 3rd avenue #300, Seattle',
+    openHour: '6am',
+    closingHour: '7pm',*/
 /*function generateRandomNumber(min, max) {
     return Math.round(Math.random() * (max - min) + min)
 }*/
